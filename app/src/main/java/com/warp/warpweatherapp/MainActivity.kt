@@ -3,48 +3,48 @@ package com.warp.warpweatherapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.warp.warpweatherapp.ui.theme.WarpWeatherAppTheme
+import androidx.activity.viewModels
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import com.warp.warpweatherapp.data.util.NetworkMonitor
+import com.warp.warpweatherapp.ui.rememberWarpWeatherAppState
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @Inject
+    lateinit var networkMonitor: NetworkMonitor
+    private val viewModel: MainActivityViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+
+
+//        lifecycleScope.launch {
+//            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+//                viewModel.darkTheme
+//                    .collect { isDark ->
+//                        darkTheme = isDark
+//                        enableEdgeToEdge(
+//                            statusBarStyle = SystemBarStyle.auto(
+//                                lightScrim = android.graphics.Color.TRANSPARENT,
+//                                darkScrim = android.graphics.Color.TRANSPARENT,
+//                            ) { isDark },
+//                            navigationBarStyle = SystemBarStyle.auto(
+//                                lightScrim = lightScrim,
+//                                darkScrim = darkScrim,
+//                            ) { isDark },
+//                        )
+//                    }
+//            }
+//        }
+
         setContent {
-            WarpWeatherAppTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
+            val appState = rememberWarpWeatherAppState(
+                networkMonitor = networkMonitor,
+            )
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    WarpWeatherAppTheme {
-        Greeting("Android")
     }
 }
