@@ -22,14 +22,10 @@ android {
         unitTests.isIncludeAndroidResources = true
     }
 
-    lint {
-        disable += "NullSafeMutableLiveData"
-    }
-
     defaultConfig {
         applicationId = "com.warp.warpweatherapp"
-        minSdk = 24
-        targetSdk = 36
+        minSdk = 26
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -89,6 +85,16 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.navigation.compose)
+
+    // Retrofit / OkHttp
+    implementation(libs.retrofit)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging)
+    implementation(libs.converter.kotlinx.serialization)
+
+    // App Startup
+    implementation(libs.androidx.startup.runtime)
+    implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
