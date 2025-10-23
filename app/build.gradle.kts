@@ -84,6 +84,7 @@ dependencies {
     // Hilt (KSP)
     implementation(libs.hilt.android)
     implementation(libs.androidx.compose.foundation)
+    implementation(libs.androidx.ui.test.junit4)
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.navigation.compose)
 
@@ -120,6 +121,8 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+
+    //unit tests
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -127,4 +130,15 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
+    testImplementation(kotlin("test"))
+    testImplementation(libs.hilt.android.testing)
+    kspTest(libs.hilt.compiler)
+    kspAndroidTest(libs.hilt.compiler)
+    implementation(libs.androidx.navigation.testing)
+
+    testImplementation(libs.androidx.test.core)
+    testImplementation(libs.androidx.test.runner)
+    testImplementation(libs.robolectric)
 }
