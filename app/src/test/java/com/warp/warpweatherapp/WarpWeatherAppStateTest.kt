@@ -1,8 +1,6 @@
 package com.warp.warpweatherapp
 
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.navigation.NavHostController
 import com.warp.warpweatherapp.data.location.LocationData
 import com.warp.warpweatherapp.ui.WarpWeatherAppState
 import com.warp.warpweatherapp.ui.rememberWarpWeatherAppState
@@ -67,4 +65,34 @@ class WarpWeatherAppStateTest {
             locationManager.clearLocation()
             assertEquals(null, state.location.value)
         }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun warpWeatherAppStateTest_whenLocationHasStarted_locationIsUpdated() =
+        runTest(UnconfinedTestDispatcher()) {
+
+            composeTestRule.setContent {
+                state = rememberWarpWeatherAppState(
+                    networkMonitor = networkMonitor,
+                    coroutineScope = backgroundScope,
+                    locationManager = locationManager
+                )
+            }
+
+            backgroundScope.launch { state.location.collect() }
+
+            // Simulate start and update
+            locationManager.startLocationUpdates()
+            locationManager.emitLocation(-26.2041, 28.0473) // Johannesburg
+
+            assertEquals(
+                LocationData(latitude = -26.2041, longitude = 28.0473),
+                state.location.value
+            )
+
+            // Simulate clearing
+            locationManager.clearLocation()
+            assertEquals(null, state.location.value)
+        }
+
 }
