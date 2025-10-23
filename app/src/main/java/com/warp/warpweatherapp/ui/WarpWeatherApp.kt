@@ -38,7 +38,6 @@ fun WarpWeatherApp(
     )
 }
 
-
 @Composable
 @OptIn(
     ExperimentalMaterial3Api::class,

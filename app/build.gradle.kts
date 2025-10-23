@@ -96,6 +96,20 @@ dependencies {
     implementation(libs.androidx.startup.runtime)
     implementation(libs.kotlinx.serialization.json)
 
+    // For location services
+    implementation(libs.play.services.location)
+
+    // Kotlin Coroutines and Flow
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
+
+    // Hilt for dependency injection
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
+
+    // Lifecycle Compose integration
+    implementation(libs.androidx.lifecycle.runtime.compose)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

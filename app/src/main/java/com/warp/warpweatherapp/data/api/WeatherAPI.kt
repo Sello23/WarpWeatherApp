@@ -2,7 +2,7 @@ package com.warp.warpweatherapp.data.api
 
 import androidx.annotation.Keep
 import com.warp.warpweatherapp.BuildConfig
-import com.warp.warpweatherapp.data.dto.Weather
+import com.warp.warpweatherapp.data.model.Weather
 import com.warp.warpweatherapp.data.util.Constants
 import retrofit2.http.GET
 import retrofit2.http.Query

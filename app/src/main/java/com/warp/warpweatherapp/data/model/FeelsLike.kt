@@ -1,4 +1,4 @@
-package com.warp.warpweatherapp.data.dto
+package com.warp.warpweatherapp.data.model
 
 data class FeelsLike(
     val day: Double,
