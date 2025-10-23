@@ -6,31 +6,62 @@ import com.warp.warpweatherapp.data.state.WeatherUiState
 import com.warp.warpweatherapp.domain.usecase.GetWeatherByCityUseCase
 import com.warp.warpweatherapp.domain.usecase.GetWeatherByCoordinatesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@OptIn(FlowPreview::class)
 @HiltViewModel
 class MainScreenViewModel @Inject constructor(
     private val getWeatherByCityUseCase: GetWeatherByCityUseCase,
     private val getWeatherByCoordinatesUseCase: GetWeatherByCoordinatesUseCase
 ) : ViewModel() {
-
     private val _weatherState = MutableStateFlow<WeatherUiState>(WeatherUiState.Empty)
-    val weatherState: StateFlow<WeatherUiState> = _weatherState
+    val weatherState: StateFlow<WeatherUiState> = _weatherState.asStateFlow()
+    private val _query = MutableStateFlow("")
+    val query: StateFlow<String> = _query.asStateFlow()
+    private val _location = MutableStateFlow<Pair<Double, Double>?>(null)
+    val location: StateFlow<Pair<Double, Double>?> = _location.asStateFlow()
 
-    fun fetchWeatherByCity(cityName: String) {
+    init {
         viewModelScope.launch {
-            _weatherState.value = WeatherUiState.Loading
-            _weatherState.value = getWeatherByCityUseCase(cityName)
+            combine(
+                _query.debounce(700).distinctUntilChanged(),
+                _location
+            ) { query, location ->
+                query to location
+            }
+                .distinctUntilChanged()
+                .collectLatest { (query, location) ->
+                    when {
+                        query.isNotBlank() -> fetchWeatherByCity(query)
+                        location != null -> fetchWeatherByCoordinates(
+                            location.first,
+                            location.second
+                        )
+
+                        else -> _weatherState.value = WeatherUiState.Empty
+                    }
+                }
         }
     }
 
-    fun fetchWeatherByCoordinates(lat: Double, lon: Double) {
-        viewModelScope.launch {
-            _weatherState.value = WeatherUiState.Loading
-            _weatherState.value = getWeatherByCoordinatesUseCase(lat, lon)
-        }
+    fun onQueryChange(newQuery: String) {
+        _query.value = newQuery
+    }
+
+    fun updateLocation(lat: Double, lon: Double) {
+        _location.value = lat to lon
+    }
+
+    private suspend fun fetchWeatherByCity(cityName: String) {
+        _weatherState.value = WeatherUiState.Loading
+        _weatherState.value = getWeatherByCityUseCase(cityName)
+    }
+
+    private suspend fun fetchWeatherByCoordinates(lat: Double, lon: Double) {
+        _weatherState.value = WeatherUiState.Loading
+        _weatherState.value = getWeatherByCoordinatesUseCase(lat, lon)
     }
 }
