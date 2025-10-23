@@ -4,38 +4,13 @@ package com.warp.warpweatherapp.ui.screens
 
 import android.widget.Toast
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -60,6 +35,7 @@ fun MainScreen(
     val viewModel: MainScreenViewModel = hiltViewModel()
     val context = LocalContext.current
     val coroutineScope = appState.coroutineScope
+    val uiScope = rememberCoroutineScope()
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
 
@@ -104,6 +80,9 @@ fun MainScreen(
                             ),
                             keyboardActions = KeyboardActions(onSearch = {
                                 if (query.isNotBlank()) {
+                                    uiScope.launch {
+                                        viewModel.fetchWeatherByCity(query)
+                                    }
                                     focusManager.clearFocus()
                                     expanded = false
                                 }
@@ -124,22 +103,42 @@ fun MainScreen(
                     }
                     LaunchedEffect(Unit) { focusRequester.requestFocus() }
                 } else {
-                    OutlinedButton(
-                        onClick = { expanded = true },
+                    Surface(
+                        tonalElevation = 3.dp,
+                        shadowElevation = 1.dp,
                         shape = MaterialTheme.shapes.extraLarge,
-                        border = ButtonDefaults.outlinedButtonBorder,
-                        contentPadding = PaddingValues(horizontal = 5.dp, vertical = 8.dp)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 8.dp)
+                            .height(48.dp),
+                        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.45f)
                     ) {
-                        Icon(
-                            imageVector = Icons.Filled.Search,
-                            contentDescription = "Search"
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(
-                            text = query.ifBlank { "Search city…" },
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
-                        )
+                        Row(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(horizontal = 16.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.Search,
+                                contentDescription = "Search",
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                            Spacer(modifier = Modifier.width(12.dp))
+                            Text(
+                                text = query.ifBlank { "Search City…" },
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
+                            )
+                        }
+                        Surface(
+                            modifier = Modifier
+                                .fillMaxSize(),
+                            color = Color.Transparent,
+                            tonalElevation = 0.dp,
+                            shadowElevation = 0.dp,
+                            onClick = { expanded = true }
+                        ) {}
                     }
                 }
             }

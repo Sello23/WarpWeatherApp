@@ -22,7 +22,6 @@ class MainScreenViewModel @Inject constructor(
     private val _query = MutableStateFlow("")
     val query: StateFlow<String> = _query.asStateFlow()
     private val _location = MutableStateFlow<Pair<Double, Double>?>(null)
-    val location: StateFlow<Pair<Double, Double>?> = _location.asStateFlow()
 
     init {
         viewModelScope.launch {
@@ -55,7 +54,7 @@ class MainScreenViewModel @Inject constructor(
         _location.value = lat to lon
     }
 
-    private suspend fun fetchWeatherByCity(cityName: String) {
+    suspend fun fetchWeatherByCity(cityName: String) {
         _weatherState.value = WeatherUiState.Loading
         _weatherState.value = getWeatherByCityUseCase(cityName)
     }
