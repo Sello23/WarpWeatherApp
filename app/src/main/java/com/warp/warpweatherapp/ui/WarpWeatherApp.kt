@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.warp.warpweatherapp.R
+import com.warp.warpweatherapp.ui.screens.MainScreen
 
 @Composable
 fun WarpWeatherApp(
@@ -48,6 +49,5 @@ internal fun WarpWeatherApp(
     snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier,
 ) {
-
-
+    MainScreen(appState, snackbarHostState, modifier)
 }

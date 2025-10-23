@@ -1,8 +1,19 @@
 package com.warp.warpweatherapp.data.model
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class FeelsLike(
-    val day: Double,
-    val eve: Double,
-    val morn: Double,
-    val night: Double
+    @SerialName("day")
+    val day: Double = 0.0,
+
+    @SerialName("night")
+    val night: Double = 0.0,
+
+    @SerialName("eve")
+    val eve: Double = 0.0,
+
+    @SerialName("morn")
+    val morn: Double = 0.0
 )

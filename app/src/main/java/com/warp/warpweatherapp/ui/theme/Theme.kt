@@ -1,11 +1,13 @@
 package com.warp.warpweatherapp.ui.theme
 
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.unit.dp
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 
 val BrandFrostBlack = Color(0xFF0E0E0E)
 val BrandFrostGrey = Color(0xFF1E1E1E)
@@ -62,11 +64,28 @@ object WarpWeatherAlertDialogDefaults {
     val tonalElevation = 6.dp
 }
 
+object WarpWeatherTextFieldDefaults {
+
+    @Stable
+    @Composable
+    fun colors() = OutlinedTextFieldDefaults.colors(
+        focusedBorderColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f),
+        unfocusedBorderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f),
+        cursorColor = MaterialTheme.colorScheme.onSurface,
+        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+        unfocusedTextColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.9f),
+        focusedLabelColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+        unfocusedLabelColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+        focusedContainerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.6f),
+        unfocusedContainerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.4f)
+    )
+}
+
 @Composable
 fun WarpWeatherAppTheme(
     content: @Composable () -> Unit
 ) {
-    val colors = LightColors
+    val colors = DarkColors
 
     MaterialTheme(
         colorScheme = colors,

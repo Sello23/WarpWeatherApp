@@ -83,6 +83,7 @@ android {
 dependencies {
     // Hilt (KSP)
     implementation(libs.hilt.android)
+    implementation(libs.androidx.compose.foundation)
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.navigation.compose)
 
@@ -109,7 +110,6 @@ dependencies {
 
     // Lifecycle Compose integration
     implementation(libs.androidx.lifecycle.runtime.compose)
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

@@ -247,7 +247,6 @@ fun WarpWeatherApp(
         modifier = Modifier
             .fillMaxSize()
             .padding(innerPadding),
-        color = MaterialTheme.colorScheme.background
     ) {
         Column(
             verticalArrangement = Arrangement.Center,
