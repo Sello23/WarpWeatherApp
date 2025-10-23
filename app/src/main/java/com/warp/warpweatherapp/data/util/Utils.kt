@@ -5,12 +5,13 @@ import android.content.res.Resources
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
-fun formatDate(timestamp: Int): String {
-    val sdf = SimpleDateFormat("EEE, MMM d")
-    val date = java.util.Date(timestamp.toLong() * 1000)
-
-    return sdf.format(date)
+fun currentFormattedDate(): String {
+    val date = Date()
+    val formatter = SimpleDateFormat("EEEE, MMM d", Locale.getDefault())
+    return formatter.format(date)
 }
 
 fun formatDecimals(item: Double): String {

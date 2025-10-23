@@ -63,6 +63,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        viewModel.setLocationPermissionGranted(areLocationPermissionsAlreadyGranted())
+
         setContent {
             WarpWeatherAppTheme {
                 val permissionGranted by viewModel.locationPermissionGranted.collectAsStateWithLifecycle()
@@ -110,30 +112,36 @@ class MainActivity : ComponentActivity() {
                             shouldShowPermissionRationale
                         )
 
-                        if (currentPermissionsStatus == LocationPermissionState.Granted.name) {
-                            viewModel.setLocationPermissionGranted(
-                                currentPermissionsStatus == LocationPermissionState.Granted.name
-                            )
-                        }
+                        viewModel.setLocationPermissionGranted(
+                            currentPermissionsStatus == LocationPermissionState.Granted.name
+                        )
                     }
                 )
 
                 val lifecycleOwner = androidx.lifecycle.compose.LocalLifecycleOwner.current
 
-                DisposableEffect(key1 = lifecycleOwner, effect = {
-                    val observer = LifecycleEventObserver { _, event ->
-                        if (event == Lifecycle.Event.ON_START &&
-                            !locationPermissionsGranted &&
-                            !shouldShowPermissionRationale
-                        ) {
-                            locationPermissionLauncher.launch(locationPermissions)
+                DisposableEffect(
+                    key1 = lifecycleOwner,
+                    effect = {
+                        val observer = LifecycleEventObserver { _, event ->
+                            if (event == Lifecycle.Event.ON_START &&
+                                !locationPermissionsGranted &&
+                                !shouldShowPermissionRationale
+                            ) {
+                                locationPermissionLauncher.launch(locationPermissions)
+                            }
+
+                            if (event == Lifecycle.Event.ON_RESUME) {
+                                val granted = areLocationPermissionsAlreadyGranted()
+                                viewModel.setLocationPermissionGranted(granted)
+                            }
                         }
-                    }
-                    lifecycleOwner.lifecycle.addObserver(observer)
-                    onDispose {
-                        lifecycleOwner.lifecycle.removeObserver(observer)
-                    }
-                })
+                        lifecycleOwner.lifecycle.addObserver(observer)
+                        onDispose {
+                            lifecycleOwner.lifecycle.removeObserver(observer)
+                        }
+                    },
+                )
 
                 val scope = rememberCoroutineScope()
 

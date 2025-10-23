@@ -15,9 +15,6 @@ val BrandFrostWhite = Color(0xFFEAEAEA)
 val BrandFrostBlue = Color(0xFFB7C7D8)
 val BrandAccentYellow = Color(0xFFF9D65C)
 
-val LightGlassScrim = android.graphics.Color.argb(0xCC, 0xFF, 0xFF, 0xFF)
-val DarkGlassScrim = android.graphics.Color.argb(0x80, 0x0E, 0x0E, 0x0E)
-
 val LightColors = lightColorScheme(
     primary = BrandFrostBlack,
     onPrimary = BrandFrostWhite,

@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.warp.warpweatherapp.data.model.WeatherForecast
+import com.warp.warpweatherapp.data.util.currentFormattedDate
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -202,10 +203,4 @@ private fun ForecastItemCard(day: com.warp.warpweatherapp.data.model.WeatherDay)
             }
         }
     }
-}
-
-private fun currentFormattedDate(): String {
-    val date = Date()
-    val formatter = SimpleDateFormat("EEEE, MMM d", Locale.getDefault())
-    return formatter.format(date)
 }
