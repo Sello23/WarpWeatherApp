@@ -141,4 +141,18 @@ dependencies {
     testImplementation(libs.androidx.test.core)
     testImplementation(libs.androidx.test.runner)
     testImplementation(libs.robolectric)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.serialization.json.v171)
+    testImplementation(libs.retrofit)
+    testImplementation(libs.converter.kotlinx.serialization)
+    testImplementation(libs.mockwebserver)
+    testImplementation(libs.truth)
+    testImplementation(libs.androidx.core.testing)
+    testImplementation(libs.hilt.android.testing)
+    kspTest(libs.hilt.android.compiler)
+    testImplementation(libs.robolectric.v4122)
+
 }
