@@ -25,13 +25,11 @@ fun MainScreenScaffold(
     query: String,
     weatherState: WeatherUiState,
     onExpand: () -> Unit,
-    onCollapse: () -> Unit,
     onQueryChange: (String) -> Unit,
     onSearch: () -> Unit,
     onClear: () -> Unit,
     onError: (String) -> Unit,
     focusRequester: FocusRequester,
-    focusManager: FocusManager,
     snackBarHostState: SnackbarHostState,
     modifier: Modifier = Modifier
 ) {
