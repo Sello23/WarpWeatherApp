@@ -1,4 +1,4 @@
-package com.warp.warpweatherapp
+package com.warp.warpweatherapp.ui
 
 import com.warp.warpweatherapp.data.util.NetworkMonitor
 import kotlinx.coroutines.flow.Flow

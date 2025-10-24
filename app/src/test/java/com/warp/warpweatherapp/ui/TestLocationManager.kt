@@ -1,4 +1,4 @@
-package com.warp.warpweatherapp
+package com.warp.warpweatherapp.ui
 
 import com.warp.warpweatherapp.core.LocationManager
 import com.warp.warpweatherapp.data.location.LocationData

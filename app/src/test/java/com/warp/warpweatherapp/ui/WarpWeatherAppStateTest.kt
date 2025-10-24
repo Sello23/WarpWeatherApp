@@ -1,9 +1,7 @@
-package com.warp.warpweatherapp
+package com.warp.warpweatherapp.ui
 
 import androidx.compose.ui.test.junit4.createComposeRule
 import com.warp.warpweatherapp.data.location.LocationData
-import com.warp.warpweatherapp.ui.WarpWeatherAppState
-import com.warp.warpweatherapp.ui.rememberWarpWeatherAppState
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
 import kotlinx.coroutines.ExperimentalCoroutinesApi
