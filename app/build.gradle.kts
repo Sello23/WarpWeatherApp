@@ -30,7 +30,7 @@ android {
         versionName = "1.0"
 
         buildConfigField(type = "String", name = "apiKeySafe", properties.getProperty("apiKeySafe"))
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.warp.warpweatherapp.testrunner.CustomTestRunner"
         vectorDrawables.useSupportLibrary = true
     }
 
@@ -131,12 +131,19 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
+    // MockWebServer for API mocking
+    testImplementation(libs.mockwebserver)
+    androidTestImplementation(libs.mockwebserver)
+
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     testImplementation(kotlin("test"))
     testImplementation(libs.hilt.android.testing)
     kspTest(libs.hilt.compiler)
     kspAndroidTest(libs.hilt.compiler)
     implementation(libs.androidx.navigation.testing)
+
+    androidTestImplementation(libs.hilt.android.testing)
+    kspAndroidTest(libs.hilt.android.compiler)
 
     testImplementation(libs.androidx.test.core)
     testImplementation(libs.androidx.test.runner)
