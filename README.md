@@ -233,6 +233,4 @@ All rights reserved © 2025 Sello Islen Nyama.
 - Clear design rationale and architecture breakdown  
 - Video + GitHub links (fully working)  
 - Secure `local.properties` flow and HR mention  
-- Expanded testing section with example test types and tools  
-
-Would you like me to also add a **short “Assessor Quick Guide”** at the very top (like a one-paragraph overview of what to click, where to find the demo, and what the app does)? It’s a common finishing touch for assessment submissions.
+- Expanded testing section with example test types and tools
